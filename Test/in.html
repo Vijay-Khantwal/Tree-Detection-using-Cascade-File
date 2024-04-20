@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Image Example</title>
+    <style>
+        /* Add your custom CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Generate Image Example</h1>
+    <button id="generateImageBtn">Generate Image</button>
+    <div id="imageContainer"></div>
+
+    <script>
+        document.getElementById('generateImageBtn').addEventListener('click', function() {
+            // Send HTTP request to the backend API to generate the image
+            fetch('/api/generate-image', {
+                method: 'POST'
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                // Retrieve the image path from the response
+                var image_path = data.image_path;
+
+                // Display the image on the frontend
+                var imageContainer = document.getElementById('imageContainer');
+                var imgElement = document.createElement('img');
+                imgElement.src = '/api/get-image?image_path=' + encodeURIComponent(image_path);
+                imageContainer.appendChild(imgElement);
+            })
+            .catch(function(error) {
+                console.log('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
